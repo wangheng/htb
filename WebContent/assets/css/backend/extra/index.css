@@ -1,0 +1,203 @@
+ul.manufacturers {
+	margin: 0px;
+	margin-right: 10px;
+	padding: 0px;
+	list-style: none;
+/* 	background-color: #f00; */
+}
+
+li.manufacturer {
+	position: relative;
+	border-bottom: none;
+}
+
+li.manufacturer a:link,
+li.manufacturer a:visited {
+	display: block;
+	font-size: 14px;
+	color: #2854BB;
+}
+
+li.manufacturer .info {
+	padding: 5px 0px;
+}
+
+.filters {
+	border-top: solid 1px #80A1C1;
+}
+
+dl.filter {
+	margin: 0px;
+	padding: 0px;
+	border-bottom: solid 1px #CCDCEF;
+	
+/* 	background-color: #aaa; */
+}
+
+dl.filter dt {
+	float: left;
+	width: 60px;
+	margin: 0px;
+	padding: 5px 0px;
+	text-align: right;
+/* 	background-color: #ccc; */
+}
+
+dl.filter dd {
+	float: right;
+	width: 510px;
+	margin: 0px;
+	padding: 5px 0px 5px 5px;
+/* 	background-color: #ccc; */
+}
+
+dl.filter dd ul {
+	margin: 0px;
+	padding: 0px;
+	list-style: none;
+}
+
+dl.filter dd ul li {
+	float: left;
+	width: 85px;
+}
+
+dl.filter dd ul li.conti {
+	width: 170px;
+}
+
+dl.filter dd ul li a:link,
+dl.filter dd ul li a:visited {
+	padding: 0px 3px;
+	border: solid 1px #EDE6BC;
+	color: #716803;
+	background-color: #FFF7CA;
+}
+
+dl.filter dd ul li a:hover,
+dl.filter dd ul li a.sel:link,
+dl.filter dd ul li a.sel:visited {
+	color: #fff;
+	background-color: #80A1C1;
+}
+
+.feeds {
+	margin-top: 10px;
+}
+
+.feed {
+	margin-bottom: 20px;
+	border-top: solid 1px #80A1C1;
+}
+
+.feed .icon {
+	margin: 5px;
+}
+
+.feed .spec {
+	margin: 5px 0px;
+	padding: 5px 20px;
+	border: solid 1px #CCDCEF;
+	color: #2854BB;
+}
+
+.feed .spec p {
+	margin-bottom: 0.5em;
+}
+
+.feed .spec .name {
+	font-size: 24px;
+}
+
+.feed .date {
+	margin-bottom: 0px;
+}
+
+.feed .date em {
+	color: #999;
+}
+
+.feed ul.control {
+	position: absolute;
+	bottom: 0px;
+	right: 0px;
+	margin: 0px;
+	padding: 0px;
+	list-style: none;
+}
+
+.feed ul.control li {
+	float: left;
+	margin-left: 1px;
+}
+
+.feed ul.control li a:link,
+.feed ul.control li a:visited {
+	padding: 3px 5px;
+	border: solid 1px #EDE6BC;
+	color: #716803;
+	background-color: #FFF7CA;
+}
+
+.feed .price {
+	margin: 5px;
+/* 	margin-top: 20px; */
+	font-size: 24px;
+	color: #f00;
+}
+
+form.filter select {
+	margin: 0px;
+	padding: 0px;
+}
+
+.shopping_cart {
+	margin-top: 10px;
+}
+
+.shopping_cart .tab_title {
+	width: 60px;
+	padding: 0px 5px;
+	color: #fff;
+	background-color: #14589E;	
+}
+
+.shopping_cart .tab_title a:link,
+.shopping_cart .tab_title a:visited {
+	color: #fff;
+}
+
+.shopping_cart .tab_title a:hover {
+	text-decoration: underline;
+}
+
+.shopping_cart .tab_content {
+	padding: 5px;
+	border: solid 1px #14589E;
+}
+
+.shopping_cart .tab_content ul {
+	margin: 0px;
+	padding: 0px;
+	list-style: none;
+}
+
+.shopping_cart .tab_content ul.requests li {
+	margin-bottom: 5px;
+	padding-bottom: 5px;
+	border-bottom: solid 1px #ccc;
+}
+
+.shopping_cart .tab_content ul.requests li.last {
+	margin-bottom: 0px;
+	padding-bottom: 0px;
+	border-bottom: none;
+}
+
+.shopping_cart .tab_content ul.im li {
+	margin-bottom: 5px;
+}
+
+.shopping_cart .tab_content ul.im li.last {
+	margin-bottom: 0px;
+}

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+		http://www.springframework.org/schema/beans/spring-beans-2.5.xsd 
+		http://www.springframework.org/schema/tx 
+		http://www.springframework.org/schema/tx/spring-tx-2.5.xsd ">
+
+	<bean id="comboPooledDataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
+		destroy-method="close">
+		<property name="driverClass" value="com.microsoft.sqlserver.jdbc.SQLServerDriver" />
+		<property name="jdbcUrl" value="jdbc:sqlserver://${DB_HOST};databaseName=${DB_NAME}; " />
+		<property name="user" value="${DB_USER}" />
+		<property name="password" value="${DB_PASS}" />
+		<property name="minPoolSize" value="10" />
+		<property name="maxPoolSize" value="50" />
+		<property name="maxIdleTime" value="1800" />
+		<property name="acquireIncrement" value="2" />
+		<property name="maxStatements" value="0" />
+		<property name="initialPoolSize" value="2" />
+		<property name="idleConnectionTestPeriod" value="1800" />
+		<property name="acquireRetryAttempts" value="30" />
+		<property name="breakAfterAcquireFailure" value="true" />
+		<property name="testConnectionOnCheckout" value="true" />
+	</bean>
+	
+<!-- 	<bean id="driverManagerDataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource"> -->
+<!--         <property name="driverClassName" value="com.mysql.jdbc.Driver" /> -->
+<!--         <property name="url" value="jdbc:mysql://${DB_HOST}/${DB_NAME}" /> -->
+<!--         <property name="username" value="${DB_USER}" /> -->
+<!-- 		<property name="password" value="${DB_PASS}" /> -->
+<!--     </bean> -->
+
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
+		<property name="dataSource" ref="comboPooledDataSource" />
+		<property name="packagesToScan" value="org.nextplus.htb2.domain" />
+<!--		<property name="namingStrategy">-->
+<!--			<bean class="org.hibernate.cfg.DefaultComponentSafeNamingStrategy" />-->
+<!--		</property>-->
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">org.hibernate.dialect.SQLServer2008Dialect</prop>
+<!--				<prop key="hibernate.dialect">org.hibernate.dialect.MySQLMyISAMDialect</prop>-->
+<!--				<prop key="hibernate.search.default.directory_provider">filesystem</prop>-->
+<!--				<prop key="hibernate.search.default.indexBase">${UPLOAD_PATH}</prop>-->
+<!--				<prop key="hibernate.max_fetch_depth">1</prop>-->
+				<prop key="hibernate.hbm2ddl.auto">update</prop>
+				<prop key="hibernate.hbm2ddl.auto">create-drop</prop>
+<!-- 				<prop key="hibernate.show_sql">true</prop> -->
+<!-- 				<prop key="hibernate.format_sql">true</prop> -->
+<!--				<prop key="hibernate.generate_statistics">true</prop>-->
+<!--				<prop key="hibernate.cache.use_second_level_cache">true</prop>-->
+<!--				<prop key="hibernate.cache.use_query_cache">true</prop>-->
+<!--				<prop key="hibernate.cache.region.factory_class">net.sf.ehcache.hibernate.EhCacheRegionFactory</prop>-->
+			</props>
+		</property>
+	</bean>
+
+	<bean id="transactionManager"
+		class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
+	<tx:annotation-driven transaction-manager="transactionManager" />
+
+	<bean id="hibernateTemplate"
+		class="org.nextplus.htb2.hibernate.HibernateTemplate">
+		<property name="sessionFactory" ref="sessionFactory" />
+<!--		<property name="cacheQueries" value="true" />-->
+	</bean>
+
+</beans>

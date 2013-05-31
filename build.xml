@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="dump-database" default="dump-database" basedir=".">
+	<tstamp>
+		<format property="timestamp" pattern="yyyy_MM_yy_HH_mm_ss"/>
+	</tstamp>
+	<target name="dump-database">  
+	    <exec executable="mysqldump" output="backup/sql/htb2.dump" failonerror="true">  
+	        <arg value="--user=root" />  
+	        <arg value="--password=221226" />  
+	        <arg value="--host=localhost" />  
+	        <arg value="--port=3306" />  
+	        <arg value="htb2" />  
+	    </exec>  
+	</target>
+</project>

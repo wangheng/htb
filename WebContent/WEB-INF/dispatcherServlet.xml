@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:oxm="http://www.springframework.org/schema/oxm" xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+				http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+				http://www.springframework.org/schema/oxm http://www.springframework.org/schema/oxm/spring-oxm-3.0.xsd
+				http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd
+				http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+
+	<context:component-scan base-package="org.nextplus.htb2.web" />
+
+	<bean id="handlerMapping"
+		class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping">
+		<property name="interceptors">
+			<list>
+				<bean class="org.nextplus.commons.RequestUrlInterceptor" />	
+				<bean class="org.nextplus.commons.HttpSessionInterceptor" />
+				<bean class="org.nextplus.htb2.spring.HttpServletRequestInterceptor" />
+				<bean class="org.nextplus.htb2.spring.HttpServletResponseInterceptor" />
+			</list>
+		</property>
+		<property name="order" value="10" />
+	</bean>
+		
+	<bean id="handlerAdapter"
+		class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
+		<property name="webBindingInitializer">
+			<bean class="org.nextplus.htb2.bind.WebBindingInitializer" />
+		</property>
+		<property name="messageConverters">
+			<list>
+				<ref bean="stringHttpMessageConverter" />
+				<ref bean="jacksonHttpMessageConverter" />
+				<ref bean="marshallingHttpMessageConverter" />
+			</list>
+		</property>
+		<property name="order" value="10" />
+	</bean>
+	
+	<bean id="handlerExceptionResolver"
+		class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerExceptionResolver">
+		<property name="messageConverters">
+			<list>
+				<ref bean="stringHttpMessageConverter"/>
+				<ref bean="jacksonHttpMessageConverter" />
+				<ref bean="marshallingHttpMessageConverter" />
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="validator"
+		class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean"/>
+		
+	<bean id="validatorFactory"
+		class="org.nextplus.commons.ValidatorFactory">
+		<constructor-arg index="0" ref="validator" />
+	</bean>
+
+<!--	<bean id="localeResolver"-->
+<!--		class="org.springframework.web.servlet.i18n.SessionLocaleResolver">-->
+<!--	</bean>-->
+	
+<!--	<bean id="beanNameViewResolver"-->
+<!--		class="org.springframework.web.servlet.view.BeanNameViewResolver">-->
+<!--		<property name="order" value="20" />-->
+<!--	</bean>-->
+
+	<bean id="freeMarkerConfigurer"
+		class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
+		<property name="templateLoaderPath" value="/WEB-INF/freemarker" />
+		<property name="freemarkerSettings">
+			<props>
+				<prop key="template_update_delay">0</prop>
+				<prop key="default_encoding">UTF-8</prop>
+				<prop key="url_escaping_charset">UTF-8</prop>
+				<prop key="number_format">####</prop>
+			</props>
+		</property>
+		<property name="freemarkerVariables">
+			<map>
+				<entry key="xhtmlCompliant">
+					<value type="java.lang.Boolean">true</value>
+				</entry>
+				<entry key="appVersion" value="${context.appVersion}" />
+				<entry key="staticPathBase" value="${context.staticPathBase}" />
+			</map>
+		</property>
+	</bean>
+	
+	<bean id="freeMarkerViewResolver"
+		class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
+		<property name="contentType" value="text/html;charset=UTF-8" />
+		<property name="prefix" value="" />
+		<property name="suffix" value=".ftl" />
+		<property name="order" value="10" />
+	</bean>
+
+	<bean id="simpleUrlHandlerMapping"
+		class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+		<property name="order" value="20" />
+		<property name="mappings">
+			<props>
+				<prop key="/static/**">staticHttpRequestHandler</prop>
+			</props>
+		</property>
+	</bean>
+	
+	<bean id="httpRequestHandlerAdapter"
+		class="org.springframework.web.servlet.mvc.HttpRequestHandlerAdapter">
+	</bean>
+
+	<bean id="staticHttpRequestHandler"
+		class="org.springframework.web.servlet.resource.ResourceHttpRequestHandler">
+		<property name="locations">
+			<list>
+				<value>/</value>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="maxUploadSize" value="100000000" />
+	</bean>
+	
+	<bean id="messageSource"
+		class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+		<property name="basenames">
+			<value>META-INF/i18n/messages</value>
+		</property>
+		<property name="defaultEncoding" value="UTF-8" />
+		<property name="cacheSeconds" value="0" />
+	</bean>
+	
+	<bean id="propertyPlaceholderConfigurer"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<value>classpath:config.properties</value>
+    	</property>
+	</bean>
+	
+</beans>

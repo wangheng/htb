@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	http://www.springframework.org/schema/beans/spring-beans-2.5.xsd 
+	http://www.springframework.org/schema/tx 
+	http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
+	http://www.springframework.org/schema/context
+	http://www.springframework.org/schema/context/spring-context-2.5.xsd">
+
+	<bean id="javaMailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		<property name="host" value="smtp.exmail.qq.com" />
+		<property name="username" value="report@eapinchina.com" />
+		<property name="password" value="bqX3Z8Ac" />
+		<property name="javaMailProperties">
+			<props>
+				<prop key="mail.smtp.auth">true</prop>
+			</props>
+		</property>
+	</bean>
+	
+	<bean id="freeMarkerConfigurer"
+		class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
+		<property name="templateLoaderPath" value="/WEB-INF/freemarker" />
+		<property name="freemarkerSettings">
+			<props>
+				<prop key="template_update_delay">0</prop>
+				<prop key="default_encoding">UTF-8</prop>
+				<prop key="url_escaping_charset">UTF-8</prop>
+				<prop key="number_format">####</prop>
+			</props>
+		</property>
+		<property name="freemarkerVariables">
+			<map>
+				<entry key="xhtmlCompliant">
+					<value type="java.lang.Boolean">true</value>
+				</entry>
+				<entry key="appVersion" value="${context.appVersion}" />
+				<entry key="staticPathBase" value="${context.staticPathBase}" />
+			</map>
+		</property>
+	</bean>
+	
+	<bean id="smtpMailService"
+		class="org.nextplus.htb2.service.impl.SmtpMailServiceImpl">
+		<property name="javaMailSender" ref="javaMailSender" />
+		<property name="freeMarkerConfigurer" ref="freeMarkerConfigurer" />
+		<property name="from">
+			<value><![CDATA[EAP<report@eapinchina.com>]]></value>
+		</property>
+	</bean>
+	
+</beans>

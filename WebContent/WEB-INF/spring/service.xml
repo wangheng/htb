@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+		http://www.springframework.org/schema/beans/spring-beans-2.5.xsd 
+		http://www.springframework.org/schema/tx 
+		http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
+		http://www.springframework.org/schema/context
+		http://www.springframework.org/schema/context/spring-context-2.5.xsd">
+
+	<context:component-scan 
+		base-package="org.nextplus.htb2.service.impl" />
+	
+	<bean id="stringHttpMessageConverter"
+		class="org.nextplus.commons.StringHttpMessageConverter">
+		<property name="writeAcceptCharset" value="false" />
+<!--		<property name="supportedMediaTypes" value="text/plain" />-->
+	</bean>
+	
+	<bean id="jacksonHttpMessageConverter"
+		class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter">
+	</bean>
+	
+	<bean id="xStreamMarshaller"
+		class="org.springframework.oxm.xstream.XStreamMarshaller">
+		<property name="autodetectAnnotations" value="true" />
+	</bean>
+		
+	<bean id="marshallingHttpMessageConverter"
+		class="org.springframework.http.converter.xml.MarshallingHttpMessageConverter">
+		<property name="marshaller" ref="xStreamMarshaller" />
+		<property name="unmarshaller" ref="xStreamMarshaller" />
+	</bean>
+
+	<bean id="restTemplate" class="org.springframework.web.client.RestTemplate">
+		<property name="requestFactory">
+			<bean class="org.springframework.http.client.CommonsClientHttpRequestFactory" />
+		</property>
+		<property name="messageConverters">
+			<list>
+				<ref bean="stringHttpMessageConverter" />
+				<ref bean="jacksonHttpMessageConverter" />
+				<ref bean="marshallingHttpMessageConverter" />
+			</list>
+		</property>
+	</bean>
+	
+<!-- 	<bean id="fileUploadService" -->
+<!-- 		class="org.nextplus.commons.FileUploadServiceImpl"> -->
+<!-- 		<property name="fileUploadLocation" value="${FILE_UPLOAD_PATH}" /> -->
+<!-- 	</bean> -->
+
+</beans>

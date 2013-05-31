@@ -1,0 +1,70 @@
+body {
+	font-family: Arial, "微软雅黑", "Helvetica Neue", Helvetica, sans-serif;
+}
+
+.bg {
+	background-color: #ddd;
+}
+
+.bd {
+	border: solid 1px #ff9696 !important;
+}
+
+.inline {
+	display: inline;
+}
+
+.lf {
+	text-align: left;
+}
+
+.ct {
+	text-align: center;
+}
+
+.rh {
+	text-align: right;
+}
+
+.table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
+	background-color: #eee;
+}
+
+/* Bootstrap */
+
+.form-horizontal .control-group {
+	margin-bottom: 10px;
+}
+
+.form-horizontal .control-label {
+	float: left;
+	width: 90px;
+	padding-top: 5px;
+	text-align: right;
+}
+
+.form-horizontal .controls {
+	*display: inline-block;
+	*padding-left: 10px;
+	margin-left: 100px;
+	*margin-left: 0;
+}
+
+.form-horizontal .text-error {
+	margin-left: 5px;
+}
+
+.navbar .brand,
+.navbar .nav > li > a {
+	padding-left: 12px;
+	padding-right: 12px;
+}
+
+.breadcrumb {
+	padding: 8px 12px;
+	background-color: #eee;
+}
+
+table caption {
+	margin-bottom: 10px;
+}
